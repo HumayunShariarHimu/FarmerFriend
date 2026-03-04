@@ -3,279 +3,1111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>কৃষক বন্ধু  | ডিজিটাল কৃষি বিপ্লব</title>
+    <title>কৃষক বন্ধু | ডিজিটাল কৃষি বিপ্লব</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        /* CSS Variables & Global Styles */
+        /* ===================== CSS Variables ===================== */
         :root {
-            --primary: #1b5e20;
-            --primary-light: #2e7d32;
-            --secondary: #fbc02d;
-            --accent: #e65100;
-            --danger: #d32f2f;
-            --bg: #f4f7f6;
-            --white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.9);
-            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --primary:        #1a5c23;
+            --primary-light:  #2e7d32;
+            --primary-glow:   rgba(26, 92, 35, 0.15);
+            --secondary:      #f9a825;
+            --accent:         #e65100;
+            --danger:         #c62828;
+            --success:        #2e7d32;
+            --bg:             #f0f4f1;
+            --surface:        #ffffff;
+            --surface2:       #f7faf8;
+            --glass:          rgba(255,255,255,0.85);
+            --glass-border:   rgba(255,255,255,0.6);
+            --text-primary:   #1c2b1e;
+            --text-secondary: #5a6b5c;
+            --border:         rgba(26, 92, 35, 0.1);
+            --shadow-sm:      0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md:      0 8px 30px rgba(0,0,0,0.09);
+            --shadow-lg:      0 20px 60px rgba(0,0,0,0.12);
+            --shadow-green:   0 8px 30px rgba(26,92,35,0.18);
+            --radius-sm:      12px;
+            --radius-md:      20px;
+            --radius-lg:      28px;
+            --radius-xl:      40px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* ===================== Reset & Base ===================== */
+        *, *::before, *::after {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Hind Siliguri', sans-serif;
-            background-color: var(--bg);
-            color: #2c3e50;
+            background: var(--bg);
+            background-image:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(26,92,35,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(249,168,37,0.06) 0%, transparent 60%);
+            background-attachment: fixed;
+            color: var(--text-primary);
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        /* ===================== Scrollbar ===================== */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 10px; }
 
-        /* Navigation Bar */
+        /* ===================== Navigation ===================== */
         nav {
             background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 15px 5%;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0 5%;
+            height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 20px rgba(0,0,0,0.06);
         }
 
-        .logo { font-size: 1.8rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-        
-        /* Hero Section */
+        .logo {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .logo .leaf-icon {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(26,92,35,0.3);
+            flex-shrink: 0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        #date-time {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 7px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            box-shadow: 0 3px 12px rgba(26,92,35,0.25);
+            white-space: nowrap;
+        }
+
+        /* ===================== Hero ===================== */
         .hero {
-            background: linear-gradient(rgba(27, 94, 32, 0.8), rgba(27, 94, 32, 0.8)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background:
+                linear-gradient(160deg, rgba(26,92,35,0.92) 0%, rgba(46,125,50,0.85) 60%, rgba(56,142,60,0.8) 100%),
+                url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
-            height: 350px;
+            min-height: 320px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
             text-align: center;
-            border-bottom-left-radius: 100px;
-            border-bottom-right-radius: 100px;
+            padding: 50px 20px 80px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
-
-        /* Dashboard Container */
-        .container { max-width: 1200px; margin: -50px auto 50px; padding: 0 20px; }
-
-        .grid-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
-
-        /* Shared Card Style */
-        .card {
-            background: var(--white);
-            border-radius: 24px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.02);
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #f8f9fa; padding-bottom: 15px; }
-        .card-header h2 { font-size: 1.4rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; right: 0;
+            height: 80px;
+            background: var(--bg);
+            clip-path: ellipse(55% 100% at 50% 100%);
+        }
 
-        /* Weather Component */
-        .weather-card {
-            background: linear-gradient(135deg, #1b5e20, #43a047);
+        .hero-badge {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
             color: white;
-            display: flex;
-            justify-content: space-around;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+            display: inline-flex;
             align-items: center;
-            padding: 30px;
+            gap: 8px;
         }
 
-        .weather-main h3 { font-size: 4rem; margin: 0; }
-        .weather-details p { font-size: 1.1rem; margin: 5px 0; opacity: 0.9; }
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3.2rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
 
-        /* Market Table Enhancement */
-        .market-scroll { max-height: 500px; overflow-y: auto; border-radius: 15px; border: 1px solid #eee; }
-        table { width: 100%; border-collapse: collapse; background: #fff; }
-        th { background: #f8f9fa; padding: 15px; text-align: left; color: #666; font-weight: 600; position: sticky; top: 0; }
-        td { padding: 15px; border-bottom: 1px solid #f1f1f1; font-size: 1rem; }
+        .hero p {
+            font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+            opacity: 0.88;
+            max-width: 560px;
+            line-height: 1.7;
+        }
+
+        /* ===================== Layout Container ===================== */
+        .container {
+            max-width: 1240px;
+            margin: -30px auto 60px;
+            padding: 0 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* ===================== Cards ===================== */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.5s ease-out both;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover::before { opacity: 1; }
+        .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card-header h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .card-header h2 i {
+            width: 34px; height: 34px;
+            background: var(--primary-glow);
+            border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        /* ===================== Weather Card ===================== */
+        .weather-card {
+            background: linear-gradient(140deg, #1a4f1e 0%, #2e7d32 50%, #388e3c 100%);
+            color: white;
+            border: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+            padding: 32px;
+        }
+
+        .weather-card::before { opacity: 0 !important; }
+        .weather-card:hover { transform: translateY(-2px); }
+
+        .weather-card::after {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+
+        .weather-main {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .weather-main i {
+            font-size: 3rem;
+            margin-bottom: 4px;
+            opacity: 0.9;
+        }
+
+        .weather-main h3 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .weather-main #loc-name {
+            font-size: 0.9rem;
+            opacity: 0.75;
+            font-weight: 400;
+        }
+
+        .weather-details {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .weather-detail-item {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+
+        .weather-detail-item i {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+            opacity: 0.85;
+        }
+
+        /* ===================== Alert Card ===================== */
+        .alert-card-content {
+            background: linear-gradient(135deg, #fff8e1, #fffde7);
+            border-left: 4px solid var(--secondary);
+            border-radius: var(--radius-sm);
+            padding: 18px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #5a4a10;
+        }
+
+        /* ===================== Market Table ===================== */
+        .market-scroll {
+            max-height: 480px;
+            overflow-y: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead tr {
+            background: linear-gradient(90deg, var(--surface2), #edf4ee);
+        }
+
+        th {
+            padding: 14px 16px;
+            text-align: left;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.4px;
+            position: sticky;
+            top: 0;
+            background: #edf4ee;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f4f1;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            transition: background 0.2s;
+        }
+
+        tbody tr:hover td { background: #f7fdf8; }
+        tbody tr:last-child td { border-bottom: none; }
+
         .price-up { color: var(--danger); font-weight: 700; }
-        .trend-icon { font-size: 0.8rem; margin-left: 5px; }
+        .trend-up { color: var(--danger); font-weight: 700; }
+        .trend-down { color: var(--success); font-weight: 700; }
+        .trend-stable { color: #888; }
 
-        /* Interactive Tabs */
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { padding: 10px 20px; border-radius: 30px; border: none; background: #eee; cursor: pointer; font-weight: 600; }
-        .tab-btn.active { background: var(--primary); color: white; }
+        .trend-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
 
-        /* Calculator Styles */
-        .calc-input-group { margin-bottom: 15px; }
-        .calc-input-group label { display: block; margin-bottom: 5px; font-weight: 600; }
-        input[type="number"], select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none; }
-        .calc-result { background: #e8f5e9; padding: 15px; border-radius: 12px; margin-top: 15px; display: none; }
+        .trend-badge.up { background: #ffebee; color: var(--danger); }
+        .trend-badge.down { background: #e8f5e9; color: var(--success); }
+        .trend-badge.stable { background: #f5f5f5; color: #757575; }
 
-        /* Footer */
+        /* ===================== Search Section ===================== */
+        .search-section-modern {
+            margin-top: 24px;
+            padding: 22px;
+            background: linear-gradient(135deg, #f0f9f0, #fafffe);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(26,92,35,0.12);
+        }
+
+        .search-title {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+            text-align: center;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .modern-search-wrapper { margin-bottom: 12px; }
+
+        .modern-search-form {
+            display: flex;
+            background: var(--surface);
+            padding: 6px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: box-shadow 0.3s, transform 0.3s;
+            align-items: center;
+        }
+
+        .modern-search-form:focus-within {
+            box-shadow: 0 8px 25px rgba(26,92,35,0.12);
+            transform: translateY(-2px);
+            border-color: rgba(26,92,35,0.25);
+        }
+
+        .input-with-icon {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            padding: 4px 12px;
+            gap: 10px;
+        }
+
+        .input-with-icon i { font-size: 1.1rem; }
+        .input-with-icon .fa-google { color: #4285F4; }
+        .input-with-icon .fa-youtube { color: #FF0000; }
+
+        .modern-search-form input {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            background: transparent;
+        }
+
+        .m-btn {
+            padding: 10px 22px;
+            border: none;
+            border-radius: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 0.88rem;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+
+        .m-btn-google {
+            background: linear-gradient(135deg, #4285F4, #1a73e8);
+            box-shadow: 0 4px 12px rgba(66,133,244,0.3);
+        }
+
+        .m-btn-youtube {
+            background: linear-gradient(135deg, #FF0000, #cc0000);
+            box-shadow: 0 4px 12px rgba(255,0,0,0.25);
+        }
+
+        .m-btn:hover { transform: scale(1.04); }
+
+        /* ===================== Tabs & Buttons ===================== */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+
+        .tab-btn {
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 2px solid var(--border);
+            background: var(--surface2);
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.25s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 14px rgba(26,92,35,0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-glow);
+        }
+
+        .refresh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 18px;
+            border-radius: 30px;
+            border: 2px solid var(--border);
+            background: var(--surface2);
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 0.85rem;
+            color: var(--primary);
+            transition: all 0.25s;
+        }
+
+        .refresh-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 14px rgba(26,92,35,0.3);
+        }
+
+        /* ===================== Calculator ===================== */
+        .calc-input-group { margin-bottom: 16px; }
+
+        .calc-input-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border);
+            outline: none;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            background: var(--surface2);
+            transition: border-color 0.25s, box-shadow 0.25s;
+            appearance: none;
+        }
+
+        input[type="number"]:focus, select:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 4px rgba(26,92,35,0.08);
+            background: white;
+        }
+
+        .calc-submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow-green);
+            transition: transform 0.2s, box-shadow 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .calc-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(26,92,35,0.35);
+        }
+
+        .calc-result {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border: 2px solid rgba(46,125,50,0.2);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            margin-top: 18px;
+            display: none;
+        }
+
+        .calc-result strong {
+            display: block;
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .fert-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(46,125,50,0.2);
+        }
+
+        .fert-row:last-child { border-bottom: none; }
+        .fert-label { font-weight: 600; color: var(--text-secondary); font-size: 0.95rem; }
+        .fert-value { font-size: 1.1rem; font-weight: 700; color: var(--primary); }
+
+        /* ===================== Almanac ===================== */
+        .almanac-content {
+            background: linear-gradient(135deg, #fff8e1, #fffde7);
+            border-left: 5px solid var(--secondary);
+            padding: 18px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #4a3b00;
+        }
+
+        /* ===================== Helpline Card ===================== */
+        .helpline-card {
+            background: linear-gradient(135deg, var(--accent), #bf360c) !important;
+            color: white;
+            border: none;
+            padding: 32px 28px;
+        }
+
+        .helpline-card::before { opacity: 0 !important; }
+        .helpline-card:hover { transform: translateY(-2px); }
+
+        .helpline-card h2 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .helpline-card h2 i {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 9px;
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .helpline-card p {
+            font-size: 0.95rem;
+            opacity: 0.88;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .helpline-number {
+            font-size: 3rem;
+            color: white;
+            font-weight: 800;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .helpline-number:hover { opacity: 0.9; }
+
+        .call-badge {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            padding: 5px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            align-self: flex-end;
+            margin-bottom: 8px;
+        }
+
+        /* ===================== Footer ===================== */
         footer {
-            background: #1a1a1a;
-            color: #999;
-            padding: 60px 5% 20px;
-            margin-top: 50px;
+            background: linear-gradient(160deg, #0f1f11, #1a2e1c);
+            color: #7a9a7d;
+            padding: 60px 5% 24px;
+            margin-top: 60px;
         }
 
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-logo { color: white; font-size: 1.5rem; margin-bottom: 20px; display: block; }
-        .footer-links a { color: #888; text-decoration: none; display: block; margin-bottom: 10px; }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .footer-logo {
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo .leaf-icon {
+            width: 34px; height: 34px;
+            background: var(--primary);
+            border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .footer-about p { line-height: 1.8; font-size: 0.92rem; }
+
+        .footer-links h3, .footer-contact h3 {
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links h3::after, .footer-contact h3::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            margin-left: 8px;
+        }
+
+        .footer-links a {
+            color: #7a9a7d;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 0.92rem;
+            transition: color 0.25s, transform 0.25s;
+        }
+
+        .footer-links a::before {
+            content: '→';
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
         .footer-links a:hover { color: var(--secondary); transform: translateX(5px); }
-        .dev-credit { border-top: 1px solid #333; padding-top: 20px; text-align: center; font-size: 0.9rem; }
-        .dev-credit strong a { color: var(--secondary); text-decoration: none; }
 
-        /* Mobile Optimization */
-        @media (max-width: 992px) {
-            .grid-layout { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 2rem; }
+        .footer-contact p {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 0.92rem;
+            line-height: 1.6;
         }
 
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .card { animation: fadeIn 0.6s ease-out; }
+        .footer-contact i {
+            color: var(--primary-light);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .footer-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            margin-bottom: 24px;
+        }
+
+        .dev-credit {
+            text-align: center;
+            font-size: 0.88rem;
+            line-height: 1.9;
+        }
+
+        .dev-credit strong a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .dev-credit strong a:hover { text-decoration: underline; }
+
+        /* ===================== Animations ===================== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card:nth-child(1) { animation-delay: 0.05s; }
+        .card:nth-child(2) { animation-delay: 0.12s; }
+        .card:nth-child(3) { animation-delay: 0.19s; }
+        .card:nth-child(4) { animation-delay: 0.26s; }
+
+        /* ===================== Mobile Responsiveness ===================== */
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+
+        /* Mobile Large */
+        @media (max-width: 768px) {
+            nav { padding: 0 16px; height: 60px; }
+            .logo { font-size: 1.25rem; }
+            .logo .leaf-icon { width: 32px; height: 32px; }
+            #date-time { font-size: 0.75rem; padding: 6px 12px; }
+
+            .hero { min-height: 260px; padding: 40px 16px 70px; }
+            .hero h1 { font-size: 1.7rem; }
+            .hero p { font-size: 0.88rem; }
+            .hero-badge { font-size: 0.72rem; }
+
+            .container { padding: 0 12px; margin-top: -20px; }
+
+            .card { padding: 20px 16px; border-radius: 20px; }
+            .card-header h2 { font-size: 1.05rem; }
+
+            .weather-card {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 24px 20px;
+            }
+
+            .weather-main h3 { font-size: 3.2rem; }
+
+            /* Market table → card view on mobile */
+            table thead { display: none; }
+            table, tbody, tr, td { display: block; width: 100%; }
+            tr {
+                margin-bottom: 14px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius-sm);
+                padding: 2px;
+                background: white;
+            }
+            td {
+                padding: 10px 14px;
+                border-bottom: 1px solid #f0f4f1;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.9rem;
+            }
+            td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: var(--primary);
+                font-size: 0.82rem;
+                flex-shrink: 0;
+                margin-right: 10px;
+            }
+            td:last-child { border-bottom: none; }
+
+            .helpline-number { font-size: 2.4rem; }
+
+            footer { padding: 44px 16px 20px; }
+            .footer-grid { gap: 28px; }
+        }
+
+        /* Mobile Small */
+        @media (max-width: 480px) {
+            .logo span { display: none; }
+            #date-time { font-size: 0.72rem; padding: 5px 10px; }
+
+            .hero h1 { font-size: 1.45rem; }
+            .card { padding: 16px 14px; }
+
+            .modern-search-form {
+                flex-direction: column;
+                padding: 10px;
+                gap: 8px;
+            }
+            .input-with-icon {
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 8px;
+                width: 100%;
+            }
+            .m-btn { width: 100%; text-align: center; padding: 12px; border-radius: 10px; }
+
+            .helpline-number { font-size: 2rem; }
+            .tab-btn, .refresh-btn { font-size: 0.82rem; padding: 8px 14px; }
+        }
     </style>
 </head>
 <body>
 
+<!-- ===================== Navigation ===================== -->
 <nav>
-    <div class="logo"><i class="fas fa-leaf"></i> কৃষক বন্ধু</div>
-    <div id="date-time">-- : -- : --</div>
+    <div class="logo">
+        <div class="logo"><i class="fas fa-leaf"></i> কৃষক বন্ধু</div>
+
+    </div>
+    <div class="nav-right">
+        <div id="date-time">-- : -- : --</div>
+    </div>
 </nav>
 
+<!-- ===================== Hero Section ===================== -->
 <section class="hero">
-    <h1>স্মার্ট কৃষি - উন্নত জীবন</h1>
-    <p> সরকারি কৃষি তথ্যভাণ্ডার ও আধুনিক প্রযুক্তির সমন্বয়ে উন্নত কৃষি সহায়ক এপ্লিকেশন</p>
+    <div class="hero-badge"><i class="fas fa-shield-alt"></i> ডিজিটাল কৃষি বিপ্লব</div>
+    <h1>স্মার্ট কৃষি — উন্নত জীবন</h1>
+    <p>সরকারি কৃষি তথ্যভাণ্ডার ও আধুনিক প্রযুক্তির সমন্বয়ে উন্নত কৃষি সহায়ক এপ্লিকেশন</p>
 </section>
 
+<!-- ===================== Dashboard ===================== -->
 <div class="container">
+
+    <!-- Row 1: Weather + Alerts -->
     <div class="grid-layout">
         <div class="card weather-card">
             <div class="weather-main">
-                <i class="fas fa-cloud-sun-rain fa-4x"></i>
+                <i class="fas fa-cloud-sun-rain"></i>
                 <h3 id="temp">--°C</h3>
                 <p id="loc-name">অবস্থান লোড হচ্ছে...</p>
             </div>
             <div class="weather-details">
-                <p><i class="fas fa-tint"></i> আর্দ্রতা: <span id="humidity">--</span>%</p>
-                <p><i class="fas fa-wind"></i> বায়ুপ্রবাহ: <span id="wind">--</span> km/h</p>
-                <p><i class="fas fa-umbrella"></i> বৃষ্টির সম্ভাবনা: <span id="rain">--</span>%</p>
+                <div class="weather-detail-item">
+                    <i class="fas fa-tint"></i>
+                    <span>আর্দ্রতা: <strong><span id="humidity">--</span>%</strong></span>
+                </div>
+                <div class="weather-detail-item">
+                    <i class="fas fa-wind"></i>
+                    <span>বায়ুপ্রবাহ: <strong><span id="wind">--</span> km/h</strong></span>
+                </div>
+                <div class="weather-detail-item">
+                    <i class="fas fa-umbrella"></i>
+                    <span>বৃষ্টির সম্ভাবনা: <strong><span id="rain">--</span>%</strong></span>
+                </div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header">
-                <h2><i class="fas fa-bell"></i> জরুরি সর্তকতা (আপডেট) </h2>
+                <h2><i class="fas fa-bell"></i> জরুরি সতর্কতা</h2>
             </div>
             <div id="alerts">
-                <p style="color: #666; font-style: italic;">বর্তমানে কোনো বিশেষ সর্তকতা নেই। স্বাভাবিক চাষাবাদ অব্যাহত রাখুন।</p>
+                <div class="alert-card-content">
+                    বর্তমানে কোনো বিশেষ সতর্কতা নেই। স্বাভাবিক চাষাবাদ অব্যাহত রাখুন।
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Row 2: Market + Search -->
     <div class="grid-layout">
         <div class="card">
             <div class="card-header">
-                <h2><i class="fas fa-chart-line"></i> লাইভ বাজার দর (রিয়েল-টাইম)</h2>
-                <button class="tab-btn active" onclick="fetchMarketData()">Refresh <i class="fas fa-sync-alt"></i></button>
+                <h2><i class="fas fa-chart-line"></i> লাইভ বাজার দর (রিয়েল-টাইম)</h2>
+                <button class="refresh-btn" onclick="fetchMarketData()">
+                    <i class="fas fa-sync-alt"></i> রিফ্রেশ
+                </button>
             </div>
             <div class="market-scroll">
                 <table id="market-table">
                     <thead>
                         <tr>
                             <th>পণ্যের নাম</th>
-                            <th>পাইকারি দর (৳)</th>
-                            <th>খুচরা দর (৳)</th>
+                            <th>পাইকারি (৳)</th>
+                            <th>খুচরা (৳)</th>
                             <th>পরিবর্তন</th>
                         </tr>
                     </thead>
                     <tbody id="market-body">
-                        <tr><td colspan="4" style="text-align:center; padding: 40px;">ডেটা প্রসেসিং হচ্ছে...</td></tr>
+                        <tr><td colspan="4" style="text-align:center; padding: 40px; color:#999;">ডেটা প্রসেসিং হচ্ছে...</td></tr>
                     </tbody>
                 </table>
             </div>
+
+            <!-- Search Section -->
+            <div class="search-section-modern">
+                <h3 class="search-title"><i class="fas fa-search-plus"></i> তথ্য ভাণ্ডার অনুসন্ধান</h3>
+
+                <div class="modern-search-wrapper">
+                    <form action="https://www.google.com/search" method="GET" target="_blank" class="modern-search-form">
+                        <div class="input-with-icon">
+                            <i class="fab fa-google"></i>
+                            <input type="text" name="q" placeholder="গুগলে কৃষি সমাধান খুঁজুন..." required>
+                        </div>
+                        <button type="submit" class="m-btn m-btn-google">খুঁজুন</button>
+                    </form>
+                </div>
+
+                <div class="modern-search-wrapper">
+                    <form action="https://www.youtube.com/results" method="GET" target="_blank" class="modern-search-form">
+                        <div class="input-with-icon">
+                            <i class="fab fa-youtube"></i>
+                            <input type="text" name="search_query" placeholder="কৃষি ভিডিও টিউটোরিয়াল..." required>
+                        </div>
+                        <button type="submit" class="m-btn m-btn-youtube">ভিডিও</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
+        <!-- Calculator Card -->
         <div class="card">
             <div class="card-header">
                 <h2><i class="fas fa-calculator"></i> সার ক্যালকুলেটর</h2>
             </div>
+
             <div class="calc-input-group">
                 <label>জমির পরিমাণ (শতাংশ)</label>
-                <input type="number" id="landSize" placeholder="উদা: ৩৩">
+                <input type="number" id="landSize" placeholder="উদাহরণ: ৩৩">
             </div>
             <div class="calc-input-group">
                 <label>ফসলের ধরণ</label>
                 <select id="cropType">
-                    <option value="rice">ধান</option>
-                    <option value="wheat">গম</option>
-                    <option value="potato">আলু</option>
-                    <option value="onion">পেঁয়াজ</option>
+                    <option value="rice">🌾 ধান</option>
+                    <option value="wheat">🌿 গম</option>
+                    <option value="potato">🥔 আলু</option>
+                    <option value="onion">🧅 পেঁয়াজ</option>
                 </select>
             </div>
-            <button class="tab-btn active" style="width:100%" onclick="calculateFertilizer()">হিসাব করুন</button>
-            
+
+            <button class="calc-submit-btn" onclick="calculateFertilizer()">
+                <i class="fas fa-calculator"></i> হিসাব করুন
+            </button>
+
             <div id="calc-res" class="calc-result">
-                <strong>প্রয়োজনীয় সার:</strong><br>
-                ইউরিয়া: <span id="urea">0</span> কেজি<br>
-                টিএসপি: <span id="tsp">0</span> কেজি<br>
-                এমওপি: <span id="mop">0</span> কেজি
+                <strong><i class="fas fa-seedling"></i> প্রয়োজনীয় সার (কেজি):</strong>
+                <div class="fert-row">
+                    <span class="fert-label">ইউরিয়া</span>
+                    <span class="fert-value"><span id="urea">0</span> কেজি</span>
+                </div>
+                <div class="fert-row">
+                    <span class="fert-label">টিএসপি</span>
+                    <span class="fert-value"><span id="tsp">0</span> কেজি</span>
+                </div>
+                <div class="fert-row">
+                    <span class="fert-label">এমওপি</span>
+                    <span class="fert-value"><span id="mop">0</span> কেজি</span>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Row 3: Almanac + Helpline -->
     <div class="grid-layout">
         <div class="card">
             <div class="card-header">
                 <h2><i class="fas fa-calendar-alt"></i> ডিজিটাল কৃষি পঞ্জিকা (মার্চ ২০২৬)</h2>
             </div>
             <div id="almanac-content">
-                <div style="background: #fff8e1; border-left: 5px solid #ffc107; padding: 15px; border-radius: 8px;">
-                    <strong>ফাল্গুন-চৈত্র মাস:</strong> বোরো ধানের থোড় আসা ও শীষ বের হওয়ার সময়। এই সময় জমিতে পর্যাপ্ত পানি রাখুন এবং ব্লাস্ট রোগ দমনে আগাম ব্যবস্থা নিন। আউশ ধানের বীজতলা তৈরির উপযুক্ত সময়।
+                <div class="almanac-content">
+                    <strong>ফাল্গুন-চৈত্র মাস:</strong> বোরো ধানের থোড় আসা ও শীষ বের হওয়ার সময়। এই সময় জমিতে পর্যাপ্ত পানি রাখুন এবং ব্লাস্ট রোগ দমনে আগাম ব্যবস্থা নিন। আউশ ধানের বীজতলা তৈরির উপযুক্ত সময়।
                 </div>
             </div>
         </div>
 
-        <div class="card" style="background: var(--accent); color: white;">
+        <div class="card helpline-card">
             <h2><i class="fas fa-phone-alt"></i> সরাসরি বিশেষজ্ঞ</h2>
-            <p>যেকোনো কৃষি সমস্যার সমাধান পেতে কল করুন ১৬১২৩ নম্বরে। এটি বিনামূল্যে কৃষি সহায়ক হেল্পলাইন সার্ভিস।</p>
-            <a href="tel:16123" style="font-size: 2.5rem; color: white; font-weight: 800; text-decoration: none; display: block; margin-top: 15px;">১৬১২৩</a>
+            <p>যেকোনো কৃষি সমস্যার সমাধান পেতে কল করুন — বিনামূল্যে কৃষি সহায়ক হেল্পলাইন সার্ভিস।</p>
+            <a href="tel:16123" class="helpline-number">
+                ১৬১২৩
+                <span class="call-badge">FREE</span>
+            </a>
         </div>
     </div>
+
 </div>
 
+<!-- ===================== Footer ===================== -->
 <footer>
     <div class="footer-grid">
         <div class="footer-about">
-            <span class="footer-logo"><i class="fas fa-leaf"></i> কৃষক বন্ধু</span>
-            <p>কৃষক বন্ধু বাংলাদেশের প্রান্তিক কৃষকদের হাতে আধুনিক কৃষি প্রযুক্তির ছোঁয়া পৌঁছে দিতে অঙ্গীকারবদ্ধ।</p>
+            <div class="footer-logo">
+                <div class="leaf-icon"><i class="fas fa-leaf"></i></div>
+                কৃষক বন্ধু
+            </div>
+            <p>কৃষক বন্ধু বাংলাদেশের প্রান্তিক কৃষকদের হাতে আধুনিক কৃষি প্রযুক্তির ছোঁয়া পৌঁছে দিতে অঙ্গীকারবদ্ধ।</p>
         </div>
+
         <div class="footer-links">
             <h3>গুরুত্বপূর্ণ লিঙ্ক</h3>
             <a href="http://www.ais.gov.bd/" target="_blank">কৃষি তথ্য সার্ভিস (AIS)</a>
             <a href="http://www.dae.gov.bd/" target="_blank">কৃষি সম্প্রসারণ অধিদপ্তর (DAE)</a>
             <a href="http://www.dam.gov.bd/" target="_blank">কৃষি বিপণন অধিদপ্তর (DAM)</a>
         </div>
+
         <div class="footer-contact">
             <h3>যোগাযোগ</h3>
             <p><i class="fas fa-envelope"></i> info@krishokbondhu.gov.bd</p>
-            <p><i class="fas fa-map-marker-alt"></i> খামারবাড়ি, ফার্মগেট, ঢাকা</p>
+            <p><i class="fas fa-map-marker-alt"></i> খামারবাড়ি, ফার্মগেট, ঢাকা</p>
         </div>
     </div>
+
+    <hr class="footer-divider">
+
     <div class="dev-credit">
-        <p>Developed with <i class="fas fa-heart" style="color:red"></i> by <strong><a href="https://github.com/HumayunShariarHimu" target="_blank">Humayun Shariar Himu</a></strong></p>
-        <p>&copy; ২০২৬ কৃষক বন্ধু প্রকল্প | কৃষকের উন্নয়ন, দেশের সমৃদ্ধি</p>
+        <p>Developed with <i class="fas fa-heart" style="color:#e74c3c"></i> by
+            <strong><a href="https://github.com/HumayunShariarHimu" target="_blank">Humayun Shariar Himu</a></strong>
+        </p>
+        <p>&copy; ২০২৬ কৃষক বন্ধু প্রকল্প | কৃষকের উন্নয়ন, দেশের সমৃদ্ধি</p>
     </div>
 </footer>
 
@@ -288,6 +1120,7 @@
         });
     }
     setInterval(updateClock, 1000);
+    updateClock();
 
     /* 2. Weather Engine (Live Geo-Location) */
     async function initWeather() {
@@ -311,7 +1144,7 @@
     /* 3. Market Data (Reverse Engineered via Proxy Scraping) */
     async function fetchMarketData() {
         const tbody = document.getElementById('market-body');
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">সার্ভার থেকে লেটেস্ট তথ্য আনা হচ্ছে...</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:30px; color:#999;">সার্ভার থেকে লেটেস্ট তথ্য আনা হচ্ছে...</td></tr>';
         
         try {
             // Using AllOrigins Proxy to bypass CORS for DAM.gov.bd
@@ -322,45 +1155,43 @@
             // Note: In real scenarios, DOM parsing would target specific table IDs
             // Here we provide high-fidelity mapped data representing the live state
             const marketItems = [
-                { name: "মিনিকেট চাল", wholesale: 3200, retail: 75, trend: 'up' },
-                { name: "নাজিরশাইল চাল", wholesale: 3800, retail: 88, trend: 'stable' },
-                { name: "দেশি পেঁয়াজ", wholesale: 3400, retail: 90, trend: 'down' },
-                { name: "কাঁচা মরিচ", wholesale: 8000, retail: 120, trend: 'up' },
-                { name: "ডায়মন্ড আলু", wholesale: 1800, retail: 45, trend: 'stable' },
-                { name: "দেশি রসুন", wholesale: 11000, retail: 240, trend: 'up' },
-                { name: "সয়াবিন তেল (৫লি:)", wholesale: 780, retail: 810, trend: 'down' },
-                { name: "ব্রয়লার মুরগি", wholesale: 180, retail: 210, trend: 'up' }
+                { name: "মিনিকেট চাল",      wholesale: 3200, retail: 75,  trend: 'up' },
+                { name: "নাজিরশাইল চাল",    wholesale: 3800, retail: 88,  trend: 'stable' },
+                { name: "দেশি পেঁয়াজ",     wholesale: 3400, retail: 90,  trend: 'down' },
+                { name: "কাঁচা মরিচ",       wholesale: 8000, retail: 120, trend: 'up' },
+                { name: "ডায়মন্ড আলু",     wholesale: 1800, retail: 45,  trend: 'stable' },
+                { name: "দেশি রসুন",        wholesale: 11000, retail: 240, trend: 'up' },
+                { name: "সয়াবিন তেল (৫লি:)", wholesale: 780, retail: 810, trend: 'down' },
+                { name: "ব্রয়লার মুরগি",   wholesale: 180,  retail: 210, trend: 'up' }
             ];
 
             tbody.innerHTML = '';
             marketItems.forEach(item => {
-                const trendClass = item.trend === 'up' ? 'price-up' : (item.trend === 'down' ? 'style="color:green"' : '');
-                const trendIcon = item.trend === 'up' ? '↑' : (item.trend === 'down' ? '↓' : '●');
+                const trendLabel = item.trend === 'up' ? '↑ UP' : (item.trend === 'down' ? '↓ DOWN' : '● STABLE');
+                const trendClass = item.trend === 'up' ? 'up' : (item.trend === 'down' ? 'down' : 'stable');
                 
                 tbody.innerHTML += `
                     <tr>
-                        <td><strong>${item.name}</strong></td>
-                        <td>৳ ${item.wholesale}</td>
-                        <td class="${item.trend === 'up' ? 'price-up' : ''}">৳ ${item.retail}</td>
-                        <td ${trendClass}>${trendIcon} ${item.trend.toUpperCase()}</td>
+                        <td data-label="পণ্য"><strong>${item.name}</strong></td>
+                        <td data-label="পাইকারি">৳ ${item.wholesale.toLocaleString('bn-BD')}</td>
+                        <td data-label="খুচরা" class="${item.trend === 'up' ? 'price-up' : ''}">৳ ${item.retail.toLocaleString('bn-BD')}</td>
+                        <td data-label="পরিবর্তন"><span class="trend-badge ${trendClass}">${trendLabel}</span></td>
                     </tr>
                 `;
             });
         } catch (e) {
-    tbody.innerHTML = `
-        <tr>
-            <td colspan="4" style="text-align:center; color:red; padding:15px;">
-                তথ্য আনতে সমস্যা হচ্ছে। অনুগ্রহ করে 
-                <a href="http://www.dam.gov.bd/" 
-                   target="_blank" 
-                   style="color:#1b5e20; font-weight:600; text-decoration:underline;">
-                   কৃষি বিপণন অধিদপ্তর (DAM) ওয়েবসাইট
-                </a> 
-                হতে লাইভ মূল্য দেখুন।
-            </td>
-        </tr>
-    `;
-}
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4" style="text-align:center; color:#c62828; padding:24px;">
+                        তথ্য আনতে সমস্যা হচ্ছে। অনুগ্রহ করে 
+                        <a href="http://www.dam.gov.bd/" target="_blank" style="color:var(--primary); font-weight:700; text-decoration:underline;">
+                            কৃষি বিপণন অধিদপ্তর (DAM)
+                        </a> 
+                        থেকে লাইভ মূল্য দেখুন।
+                    </td>
+                </tr>
+            `;
+        }
     }
 
     /* 4. Fertilizer Calculator Logic */
@@ -372,13 +1203,13 @@
         if (!size || size <= 0) { alert("সঠিক জমির পরিমাণ দিন"); return; }
 
         let urea, tsp, mop;
-        if(type === 'rice') { urea = 1.2; tsp = 0.5; mop = 0.4; }
+        if(type === 'rice')        { urea = 1.2; tsp = 0.5; mop = 0.4; }
         else if(type === 'potato') { urea = 1.5; tsp = 1.2; mop = 1.1; }
-        else { urea = 1.0; tsp = 0.8; mop = 0.7; }
+        else                       { urea = 1.0; tsp = 0.8; mop = 0.7; }
 
         document.getElementById('urea').innerText = (urea * size).toFixed(2);
-        document.getElementById('tsp').innerText = (tsp * size).toFixed(2);
-        document.getElementById('mop').innerText = (mop * size).toFixed(2);
+        document.getElementById('tsp').innerText  = (tsp  * size).toFixed(2);
+        document.getElementById('mop').innerText  = (mop  * size).toFixed(2);
         
         resBox.style.display = "block";
     }
